@@ -1,0 +1,13 @@
+services:
+  app:
+    build:
+      context: ./
+      dockerfile: ./docker/dockerfile
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      DEBUG: False
+      TZ: Europe/Paris
+    volumes:
+      - "./:/code/"
