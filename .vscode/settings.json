@@ -1,22 +1,28 @@
 {
-    "[python]": {
-        "editor.formatOnSave": true,
-        "editor.defaultFormatter": "charliermarsh.ruff",
-    },
-    "ruff.organizeImports": true,
-    "ruff.importStrategy": "fromEnvironment",
-    "editor.codeActionsOnSave": {
-        "source.organizeImports.ruff": "explicit",
-        "source.unusedImports": "explicit"
-    },
-    "python.analysis.autoSearchPaths": true,
-    "python.analysis.extraPaths": [
-        "${workspaceFolder}"
-    ],
-    "python.analysis.typeCheckingMode": "basic",
-    "python.languageServer": "Pylance",
-    "python.analysis.autoImportCompletions": true,
-    "files.associations": {
-        "**/templates/**/*.html": "jinja-html"
-    }
+  "[python]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "charliermarsh.ruff"
+  },
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "explicit",
+    "source.organizeImports.ruff": "explicit",
+    "source.unusedImports": "explicit"
+  },
+  "ruff.organizeImports": true,
+  "ruff.importStrategy": "fromEnvironment",
+  // 🔍 Ensure Python analysis works well
+  "python.analysis.autoSearchPaths": true,
+  "python.analysis.useLibraryCodeForTypes": true,
+  "python.analysis.autoImportCompletions": true,
+  "python.analysis.typeCheckingMode": "basic",
+  // ✅ Add root and common module folders
+  "python.analysis.extraPaths": [
+    "${workspaceFolder}",
+    "${workspaceFolder}/app" // <-- adjust this based on your folder structure
+  ],
+  "python.languageServer": "Pylance",
+  // 🧠 File type associations
+  "files.associations": {
+    "**/templates/**/*.html": "jinja-html"
+  }
 }
