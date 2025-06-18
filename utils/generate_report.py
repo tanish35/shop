@@ -1,5 +1,6 @@
 # from ast import List
 import csv
+import os
 from datetime import datetime, time, timedelta
 from typing import Any, Dict, List
 
@@ -14,6 +15,11 @@ HARDCODED_MAX_TS = datetime(2024, 10, 14, 23, 59, 59, tzinfo=pytz.UTC)
 async def get_business_hours(store_id: str, date: datetime):
     weekday = date.weekday()
     return await db.store_hours.find_first(where={"store_id": store_id, "dayOfWeek": weekday})
+
+
+def mark_report_complete(report_id: str, path: str):
+    REPORTS[report_id] = {"status": "Complete", "path": path}
+    print(f"[REPORT] Report {report_id} marked as complete. Path: {path}")
 
 
 def interpolate_status(timeline: List[Dict[str, Any]], bh_start, bh_end):
@@ -111,7 +117,8 @@ async def generate_report(report_id: str):
         print(f"[STORE {idx}] Metrics: {metrics}")
         output_rows.append({"store_id": store_id, **{k: round(v, 2) for k, v in metrics.items()}})
 
-    path = f"/tmp/report_{report_id}.csv"
+    path = os.path.join("temp", f"report_{report_id}.csv")
+
     print(f"[REPORT] Writing report to {path}")
     with open(path, mode="w", newline="") as f:
         writer = csv.DictWriter(
